@@ -8,6 +8,9 @@ import Flexapi, { Modes, DELAY, Clients } from "../index";
 import * as Fake from "./mock-data/fake.data";
 
 describe("Mix modes test suite", () => {
+  const baseURL = "https://flexapi-mock-server.herokuapp.com";
+  // const baseURL = "http://localhost:5000";
+
   describe("Mix with Axios | GET requests", () => {
     // Applies only to tests in this describe block
     let api = null;
@@ -26,7 +29,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -101,7 +104,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -160,7 +163,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -219,7 +222,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -278,7 +281,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -340,7 +343,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -395,7 +398,7 @@ describe("Mix modes test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },

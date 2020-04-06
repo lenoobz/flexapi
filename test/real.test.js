@@ -8,6 +8,9 @@ import Flexapi, { Clients, Modes } from "../index";
 import * as Fake from "./mock-data/fake.data";
 
 describe("Real client test suite", () => {
+  const baseURL = "https://flexapi-mock-server.herokuapp.com";
+  // const baseURL = "http://localhost:5000";
+
   describe("Real with Axios | GET requests", () => {
     // Applies only to tests in this describe block
     let api = null;
@@ -20,7 +23,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -99,7 +102,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -145,7 +148,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -191,7 +194,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -237,7 +240,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -288,7 +291,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
@@ -332,7 +335,7 @@ describe("Real client test suite", () => {
           axios: {
             instance: axios,
             bearerToken: null,
-            baseURL: "https://flexapi-mock-server.herokuapp.com",
+            baseURL: baseURL,
             paramsSerializer: (params) =>
               qs.stringify(params, { arrayFormat: "repeat" }),
           },
