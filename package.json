@@ -1,0 +1,58 @@
+{
+  "name": "flexapi",
+  "version": "0.0.1",
+  "description": "Flexible swap mode and API request client",
+  "main": "index.js",
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch test/*.test.js",
+    "coveralls": "jest --coverage && cat ./test/coverage/lcov.info | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hthl85/flexapi.git"
+  },
+  "keywords": [
+    "API",
+    "swap",
+    "fake",
+    "real",
+    "mix",
+    "axios",
+    "fetch",
+    "ajax"
+  ],
+  "author": "Noob",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hthl85/flexapi/issues"
+  },
+  "homepage": "https://github.com/hthl85/flexapi#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "axios": "^0.19.2",
+    "babel-jest": "^25.2.6",
+    "babel-loader": "^8.1.0",
+    "coveralls": "^3.0.11",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "jest": "^25.2.7",
+    "prettier": "2.0.2",
+    "terser-webpack-plugin": "^2.3.5",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "qs": "^6.9.3"
+  }
+}
