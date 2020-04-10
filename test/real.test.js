@@ -5,7 +5,8 @@
 import axios from "axios";
 import qs from "qs";
 import * as Fake from "./mock-data/fake.data";
-import FlexApi, { Clients, Modes } from "..";
+import { Clients, Modes } from "../src/consts";
+import FlexApi from "../src";
 
 describe("Real client test suite", () => {
   const baseURL = "https://flexapi-mock-server.herokuapp.com";

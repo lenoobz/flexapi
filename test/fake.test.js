@@ -3,8 +3,8 @@
  */
 
 import * as Fake from "./mock-data/fake.data";
-import FlexApi, { Modes, DelayInterval } from "..";
-import { ErrorMessages } from "../src/consts";
+import { ErrorMessages, Modes, DelayInterval } from "../src/consts";
+import FlexApi from "../src";
 
 describe("Fake modes test suite", () => {
   describe("Fake | GET requests", () => {
