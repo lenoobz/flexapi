@@ -2,8 +2,9 @@
  * @jest-environment node
  */
 
-import NewFlexapi, { Modes, DELAY } from "../index";
 import * as Fake from "./mock-data/fake.data";
+import FlexApi, { Modes, DelayInterval } from "..";
+import { ErrorMessages } from "../src/consts";
 
 describe("Fake modes test suite", () => {
   describe("Fake | GET requests", () => {
@@ -14,7 +15,7 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users": Fake.getAllUsersHandler,
             "/api/v1/users/1": Fake.getUserByIdHandler,
@@ -23,7 +24,7 @@ describe("Fake modes test suite", () => {
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -47,13 +48,13 @@ describe("Fake modes test suite", () => {
 
     it("GET | throw with empty config object", async () => {
       await expect(api.get("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("GET | throw with null config object", async () => {
       await expect(api.get("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
@@ -82,13 +83,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/register": Fake.registerUserHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -105,13 +106,13 @@ describe("Fake modes test suite", () => {
 
     it("POST | throw with empty config object", async () => {
       await expect(api.post("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("POST | throw with null config object", async () => {
       await expect(api.post("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });
@@ -124,13 +125,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/4": Fake.registerUserHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -147,13 +148,13 @@ describe("Fake modes test suite", () => {
 
     it("PUT | throw with empty config object", async () => {
       await expect(api.put("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("PUT | throw with null config object", async () => {
       await expect(api.put("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });
@@ -166,13 +167,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/patchUser": Fake.patchUserInfoHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -189,13 +190,13 @@ describe("Fake modes test suite", () => {
 
     it("PATCH | throw with empty config object", async () => {
       await expect(api.patch("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("PATCH | throw with null config object", async () => {
       await expect(api.patch("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });
@@ -208,13 +209,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/4": Fake.deleteUserInfoHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -231,13 +232,13 @@ describe("Fake modes test suite", () => {
 
     it("DELETE | throw with empty config object", async () => {
       await expect(api.delete("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("DELETE | throw with null config object", async () => {
       await expect(api.delete("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });
@@ -250,13 +251,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/status": Fake.statusUserHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -271,13 +272,13 @@ describe("Fake modes test suite", () => {
 
     it("HEAD | throw with empty config object", async () => {
       await expect(api.head("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("HEAD | throw with null config object", async () => {
       await expect(api.head("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });
@@ -290,13 +291,13 @@ describe("Fake modes test suite", () => {
       opts = {
         mode: Modes.FAKE,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/4": Fake.optionsHandler,
           },
         },
       };
-      api = NewFlexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -311,13 +312,13 @@ describe("Fake modes test suite", () => {
 
     it("OPTIONS | throw with empty config object", async () => {
       await expect(api.options("/api/v1/pathNotExisted", {})).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
 
     it("OPTIONS | throw with null config object", async () => {
       await expect(api.options("/api/v1/pathNotExisted")).rejects.toThrow(
-        "No handler provided"
+        ErrorMessages.NO_HANDLER
       );
     });
   });

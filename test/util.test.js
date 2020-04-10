@@ -1,4 +1,4 @@
-import processURL from "../src/utils/url.utils";
+import processURL from "../src/utils";
 
 describe("Url utility test suite", () => {
   const baseUrl = "https://example.com/api/v1";

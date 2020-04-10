@@ -1,74 +1,73 @@
-import Fake from "./fake";
-import initRealClient from "./real";
-import processURL from "../utils/url.utils";
+import FakeClient from "./fake";
+import processURL from "../utils";
+import { Verbs, ErrorMessages } from "../consts";
+import RealClient from "./real";
 
-function Mix(fakeOpts, realOpts) {
-  const { endpoints } = fakeOpts;
-  this.endpoints = endpoints;
-  this.fakeClient = new Fake(fakeOpts);
-  this.realClient = initRealClient(realOpts);
-}
+class MixClient {
+  constructor(opts) {
+    const { fake, real } = opts;
 
-Mix.prototype.mutualRequest = function mutualRequest(method) {
-  return async function request(url, configs = {}) {
-    const processedUrl = processURL(url, configs);
-    const handler = this.endpoints[processedUrl];
-
-    if (handler) {
-      return this.fakeClient[method](url, configs);
+    if (!fake || !fake.endpoints) {
+      throw new Error(ErrorMessages.INVALID_FAKE_CONFIG);
     }
 
-    return this.realClient[method](url, configs);
-  };
-};
+    if (!real) {
+      throw new Error(ErrorMessages.INVALID_REAL_CONFIG);
+    }
 
-/**
- * Handle http get request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.get = Mix.prototype.mutualRequest("get");
+    this.endpoints = fake.endpoints;
+    this.fakeClient = new FakeClient(opts);
+    this.realClient = new RealClient(opts);
+  }
 
-/**
- * Handle http post request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.post = Mix.prototype.mutualRequest("post");
+  getRequestMethod(verb) {
+    const self = this;
+    return async function (url, payload = {}) {
+      const processedUrl = processURL(url, payload);
+      const handler = self.endpoints[processedUrl];
 
-/**
- * Handle http put request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.put = Mix.prototype.mutualRequest("put");
+      if (handler) {
+        return self.fakeClient[verb](url, payload);
+      }
 
-/**
- * Handle http patch request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.patch = Mix.prototype.mutualRequest("patch");
+      return self.realClient[verb](url, payload);
+    };
+  }
 
-/**
- * Handle http head request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.head = Mix.prototype.mutualRequest("head");
+  async get(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.GET);
+    return await requestMethod(url, payload);
+  }
 
-/**
- * Handle http options request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.options = Mix.prototype.mutualRequest("options");
+  async post(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.POST);
+    return await requestMethod(url, payload);
+  }
 
-/**
- * Handle http delete request with mix mode
- * @param {string} url
- * @param {object} configs
- */
-Mix.prototype.delete = Mix.prototype.mutualRequest("delete");
+  async put(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.PUT);
+    return await requestMethod(url, payload);
+  }
 
-export default Mix;
+  async patch(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.PATCH);
+    return await requestMethod(url, payload);
+  }
+
+  async head(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.HEAD);
+    return await requestMethod(url, payload);
+  }
+
+  async options(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.OPTIONS);
+    return await requestMethod(url, payload);
+  }
+
+  async delete(url, payload = {}) {
+    const requestMethod = this.getRequestMethod(Verbs.DELETE);
+    return await requestMethod(url, payload);
+  }
+}
+
+export default MixClient;

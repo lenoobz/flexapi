@@ -1,5 +1,5 @@
-import Flexapi from "./src";
-import { MODES, CLIENTS, DELAY } from "./src/consts/constants";
+import FlexApi from "./src";
+import { Modes, Clients, DelayInterval } from "./src/consts";
 
-export default Flexapi;
-export { MODES as Modes, CLIENTS as Clients, DELAY };
+export default FlexApi;
+export { Modes, Clients, DelayInterval };

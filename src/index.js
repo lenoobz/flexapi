@@ -1,27 +1,86 @@
-import { MODES } from "./consts/constants";
-import Mix from "./clients/mix";
-import Fake from "./clients/fake";
-import NewReal from "./clients/real";
+import { ErrorMessages, Modes } from "./consts";
+import FakeClient from "./clients/fake";
+import MixClient from "./clients/mix";
+import RealClient from "./clients/real";
 
-/**
- * Create new http client base on opts
- * @param {*} opts : Options object
- */
-function Flexapi(opts) {
-  // Create new client instance base on config
-  // If real mode return a new real client instance
-  // If fake mode return a new fake client instance
-  // If mix mode return both real and fake client instances
-  switch (opts.mode) {
-    case MODES.FAKE:
-      return new Fake(opts.fake);
-    case MODES.REAL:
-      return NewReal(opts.real);
-    case MODES.MIX:
-      return new Mix(opts.fake, opts.real);
-    default:
-      throw new Error("Not supported mode");
+class FlexApi {
+  constructor(opts) {
+    const { mode } = opts;
+
+    if (!mode) {
+      throw new Error(ErrorMessages.INVALID_CONFIG);
+    }
+
+    switch (mode) {
+      case Modes.FAKE:
+        this.client = new FakeClient(opts);
+        break;
+      case Modes.MIX:
+        this.client = new MixClient(opts);
+        break;
+      case Modes.REAL:
+        this.client = new RealClient(opts);
+        break;
+      default:
+        throw new Error(ErrorMessages.INVALID_MODE);
+    }
+  }
+
+  async get(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.get(url, payload);
+  }
+
+  async post(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.post(url, payload);
+  }
+
+  async put(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.put(url, payload);
+  }
+
+  async patch(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.patch(url, payload);
+  }
+
+  async head(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.head(url, payload);
+  }
+
+  async options(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.options(url, payload);
+  }
+
+  async delete(url, payload = {}) {
+    if (!this.client) {
+      throw new Error(ErrorMessages.NO_CLIENT);
+    }
+
+    return await this.client.delete(url, payload);
   }
 }
 
-export default Flexapi;
+export default FlexApi;
