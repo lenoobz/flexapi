@@ -4,8 +4,8 @@
 
 import axios from "axios";
 import qs from "qs";
-import Flexapi, { Modes, DELAY, Clients } from "../index";
 import * as Fake from "./mock-data/fake.data";
+import FlexApi, { Modes, Clients, DelayInterval } from "..";
 
 describe("Mix modes test suite", () => {
   const baseURL = "https://flexapi-mock-server.herokuapp.com";
@@ -19,7 +19,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users": Fake.getAllUsersHandler,
           },
@@ -35,7 +35,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -94,7 +94,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/setrole": Fake.setUserRoleHandler,
           },
@@ -110,7 +110,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -153,7 +153,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/0": Fake.getUserByIdHandler,
           },
@@ -169,7 +169,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -212,7 +212,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/patchUser": Fake.patchUserInfoHandler,
           },
@@ -228,7 +228,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -271,7 +271,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/4": Fake.deleteUserInfoHandler,
           },
@@ -287,7 +287,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -333,7 +333,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/statusFake": Fake.statusUserHandler,
           },
@@ -349,7 +349,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -388,7 +388,7 @@ describe("Mix modes test suite", () => {
       opts = {
         mode: Modes.MIX,
         fake: {
-          delay: DELAY,
+          delay: DelayInterval,
           endpoints: {
             "/api/v1/users/4": Fake.optionsHandler,
           },
@@ -404,7 +404,7 @@ describe("Mix modes test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {

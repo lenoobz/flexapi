@@ -1,83 +1,60 @@
-import { defaultFakeOpts } from "../consts/conf.default";
-import processURL from "../utils/url.utils";
+import { FakeOpts, ErrorMessages } from "../consts";
+import processURL from "../utils";
 
-/**
- * Fake client constructor
- * @param {*} opts
- */
-function Fake(opts) {
-  this.defaults = Object.assign(defaultFakeOpts, opts);
+class FakeClient {
+  constructor(opts) {
+    const { fake } = opts;
+
+    if (!fake || !fake.endpoints) {
+      throw new Error(ErrorMessages.INVALID_FAKE_CONFIG);
+    }
+
+    this.opts = Object.assign(FakeOpts, fake);
+  }
+
+  mutualRequest(url, payload = {}) {
+    const processedUrl = processURL(url, payload);
+    const { delay, endpoints } = this.opts;
+    const handlerFunc = endpoints[processedUrl];
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (handlerFunc) {
+          resolve(handlerFunc(payload));
+        } else {
+          reject(new Error(ErrorMessages.NO_HANDLER));
+        }
+      }, delay);
+    });
+  }
+
+  async get(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async post(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async put(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async patch(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async head(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async options(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
+
+  async delete(url, payload = {}) {
+    return await this.mutualRequest(url, payload);
+  }
 }
 
-/**
- * Mutual request is called by all fake request. All fake requests
- * are basically the same. They are all return a promise.
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.mutualRequest = function request(url, configs = {}) {
-  const processedUrl = processURL(url, configs);
-  const { delay, endpoints } = this.defaults;
-  const handler = endpoints[processedUrl];
-
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (handler) {
-        resolve(handler(configs));
-      } else {
-        reject(new Error("No handler provided"));
-      }
-    }, delay);
-  });
-};
-
-/**
- * Get method mimics http get request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.get = Fake.prototype.mutualRequest;
-
-/**
- * Post method mimics http post request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.post = Fake.prototype.mutualRequest;
-
-/**
- * Put method mimics http put request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.put = Fake.prototype.mutualRequest;
-
-/**
- * Patch method mimics http patch request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.patch = Fake.prototype.mutualRequest;
-
-/**
- * Head method mimics http head request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.head = Fake.prototype.mutualRequest;
-
-/**
- * Options method mimics http options request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.options = Fake.prototype.mutualRequest;
-
-/**
- * Delete method mimics http delete request
- * @param {string} url
- * @param {object} configs
- */
-Fake.prototype.delete = Fake.prototype.mutualRequest;
-
-export default Fake;
+export default FakeClient;

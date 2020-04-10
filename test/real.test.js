@@ -4,8 +4,8 @@
 
 import axios from "axios";
 import qs from "qs";
-import Flexapi, { Clients, Modes } from "../index";
 import * as Fake from "./mock-data/fake.data";
+import FlexApi, { Clients, Modes } from "..";
 
 describe("Real client test suite", () => {
   const baseURL = "https://flexapi-mock-server.herokuapp.com";
@@ -29,7 +29,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -108,7 +108,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -154,7 +154,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -200,7 +200,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -246,7 +246,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -297,7 +297,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
@@ -341,7 +341,7 @@ describe("Real client test suite", () => {
           },
         },
       };
-      api = Flexapi(opts);
+      api = new FlexApi(opts);
     });
 
     afterEach(() => {
