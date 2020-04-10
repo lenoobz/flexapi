@@ -1,6 +1,6 @@
-import FlexApi, { Modes, DelayInterval } from "..";
 import * as Fake from "./mock-data/fake.data";
-import { ErrorMessages, Clients } from "../src/consts";
+import { ErrorMessages, Clients, Modes, DelayInterval } from "../src/consts";
+import FlexApi from "../src";
 
 describe("Constructors test suite", () => {
   describe("Fake constructor", () => {

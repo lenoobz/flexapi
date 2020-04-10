@@ -5,7 +5,8 @@
 import axios from "axios";
 import qs from "qs";
 import * as Fake from "./mock-data/fake.data";
-import FlexApi, { Modes, Clients, DelayInterval } from "..";
+import { Clients, Modes, DelayInterval } from "../src/consts";
+import FlexApi from "../src";
 
 describe("Mix modes test suite", () => {
   const baseURL = "https://flexapi-mock-server.herokuapp.com";

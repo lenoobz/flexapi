@@ -7,6 +7,8 @@ typings/
 sandbox/
 test/
 dist/
+es/
+lib/
 bower.json
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
