@@ -1,226 +1,109 @@
-import { ErrorMessages } from "../consts";
+import { ErrorMessages, AxiosDefault } from "../consts";
 
 function AxiosClient(opts) {
-  const { instance, headerOpts, bearerToken, errorHandler, ...restOpts } = opts;
+  const { instance, errorHandler, config } = opts;
 
-  this.axiosOpts = restOpts;
-  this.headerOpts = headerOpts;
-  this.bearerToken = bearerToken;
-  this.errorHandler = errorHandler;
-  this.axios = instance.create(restOpts);
-}
-
-AxiosClient.prototype.extractHeader = function (
-  headerOpts,
-  bearerToken = null
-) {
-  const accessToken = bearerToken || this.bearerToken;
-  let headers = Object.assign({}, this.headerOpts, headerOpts);
-
-  if (accessToken) {
-    headers = Object.assign(headers, {
-      Authorization: `Bearer ${accessToken}`,
-    });
+  if (!config || !config.axios) {
+    throw new Error(ErrorMessages.INVALID_AXIOS_CONFIG);
   }
 
-  return { headers };
-};
+  this.errorHandler = errorHandler || AxiosDefault.errorHandler;
+  this.axiosConfig = Object.assign({}, AxiosDefault, config.axios);
+  this.axios = instance.create(this.axiosConfig);
+}
 
-AxiosClient.prototype.extractParams = function (params) {
-  return params ? { params } : {};
+AxiosClient.prototype.extractPayload = function (payload) {
+  const { headers, params, errorHandler } = payload;
+  const paramOpts = Object.assign({}, this.axiosConfig.params, params);
+  const headerOpts = Object.assign({}, this.axiosConfig.headers, headers);
+
+  return [
+    {
+      ...this.axiosConfig,
+      headers: headerOpts,
+      params: paramOpts,
+    },
+    errorHandler || this.errorHandler,
+  ];
 };
 
 AxiosClient.prototype.get = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, params, bearerToken, errorHandler } = payload;
+  const [config, errorHandler] = this.extractPayload(payload);
 
   try {
-    // Extract parameters
-    const paramOpts = this.extractParams(params);
-
-    // Extract headers
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.get(url, {
-      ...this.axiosOpts,
-      ...headerOpts,
-      ...paramOpts,
-    });
-
-    // Return response data
-    return resp.data ? resp.data : resp;
+    return await this.axios.get(url, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.GET);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.GET);
   }
 };
 
 AxiosClient.prototype.post = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const { data, ...rest } = payload;
+  const [config, errorHandler] = this.extractPayload(rest);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.post(url, body, {
-      ...this.axiosOpts,
-      ...headerOpts,
-    });
-
-    // Return response data
-    return resp.data ? resp.data : resp;
+    return await this.axios.post(url, data, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.POST);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.POST);
   }
 };
 
 AxiosClient.prototype.put = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const { data, ...rest } = payload;
+  const [config, errorHandler] = this.extractPayload(rest);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.put(url, body, {
-      ...this.axiosOpts,
-      ...headerOpts,
-    });
-
-    // Return response data
-    return resp.data ? resp.data : resp;
+    return await this.axios.put(url, data, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.PUT);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.PUT);
   }
 };
 
 AxiosClient.prototype.patch = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const { data, ...rest } = payload;
+  const [config, errorHandler] = this.extractPayload(rest);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.patch(url, body, {
-      ...this.axiosOpts,
-      ...headerOpts,
-    });
-
-    // Return response data
-    return resp.data ? resp.data : resp;
+    return await this.axios.patch(url, data, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.PATCH);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.PATCH);
   }
 };
 
 AxiosClient.prototype.head = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const [config, errorHandler] = this.extractPayload(payload);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.head(url, body, {
-      ...this.axiosOpts,
-      ...headerOpts,
-    });
-
-    // Return response data
-    return resp.headers ? resp.headers : null;
+    return await this.axios.head(url, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.HEAD);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.HEAD);
   }
 };
 
 AxiosClient.prototype.options = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const [config, errorHandler] = this.extractPayload(payload);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.options(url, body, {
-      ...this.axiosOpts,
-      ...headerOpts,
-    });
-
-    // Return response data
-    return resp.headers ? resp.headers : null;
+    return await this.axios.options(url, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.OPTIONS);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.OPTIONS);
   }
 };
 
 AxiosClient.prototype.delete = async function (url, payload = {}) {
   // Extract request detail from payload object
-  const { headers, body = {}, bearerToken, errorHandler } = payload;
+  const [config, errorHandler] = this.extractPayload(payload);
 
   try {
-    // Extract parameters
-    const headerOpts = this.extractHeader(headers, bearerToken);
-
-    // Make request
-    const resp = await this.axios.delete(url, {
-      data: { ...body },
-      ...headerOpts,
-      ...this.axiosOpts,
-    });
-
-    // Return response data
-    return resp.data ? resp.data : resp;
+    return await this.axios.delete(url, config);
   } catch (e) {
-    // If errorHandler is provided use it otherwise use generic error handler
-    if (errorHandler) {
-      errorHandler(e);
-    } else {
-      this.errorHandler(e, ErrorMessages.DELETE);
-    }
-    return null;
+    errorHandler(e, ErrorMessages.DELETE);
   }
 };
 

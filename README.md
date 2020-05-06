@@ -8,15 +8,14 @@ Flexible swap mode and API request client
 {
   "mode": "fake | real | mix",
   "real": {
-    "client": "axios | fetch | ajax",
-    "axios": {
-      "instance": axios,
-      "bearerToken": null,
-      "baseURL": "https://example.com/api/v1",
-      "errorHandler": null
-    },
-    "fetch": {},
-    "ajax": {}
+    "client": "axios | fetch",
+    "instance": axios,
+    "errorHandler": () => {},
+    "config": {
+      "axios": {},
+      "fetch": {},
+      "ajax": {}
+    }
   },
   "fake": {
     "delay": 1000,

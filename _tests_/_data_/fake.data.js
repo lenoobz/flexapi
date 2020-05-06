@@ -69,19 +69,25 @@ const data = {
  ******************************************************************************/
 const getUserByIdHandler = () => {
   return {
-    userDetails: data.userTest0,
+    data: {
+      userDetails: data.userTest0,
+    },
   };
 };
 
 const getUsersByIdsHandler = () => {
   return {
-    users: [data.userTest0, data.userTest1],
+    data: {
+      users: [data.userTest0, data.userTest1],
+    },
   };
 };
 
 const getAllUsersHandler = () => {
   return {
-    users: [data.userTest0, data.userTest1, data.userTest2],
+    data: {
+      users: [data.userTest0, data.userTest1, data.userTest2],
+    },
   };
 };
 
@@ -91,13 +97,17 @@ const getAllUsersHandler = () => {
 
 const registerUserHandler = () => {
   return {
-    userDetails: data.userTest4,
+    data: {
+      userDetails: data.userTest4,
+    },
   };
 };
 
 const setUserRoleHandler = () => {
   return {
-    userDetails: data.userTest4,
+    data: {
+      userDetails: data.userTest4,
+    },
   };
 };
 
@@ -107,7 +117,9 @@ const setUserRoleHandler = () => {
 
 const patchUserInfoHandler = () => {
   return {
-    userDetails: data.patchUserTest4,
+    data: {
+      userDetails: data.patchUserTest4,
+    },
   };
 };
 
@@ -116,7 +128,7 @@ const patchUserInfoHandler = () => {
  ******************************************************************************/
 
 const deleteUserInfoHandler = () => {
-  return { message: "Success" };
+  return { data: { message: "Success" } };
 };
 
 /** ****************************************************************************

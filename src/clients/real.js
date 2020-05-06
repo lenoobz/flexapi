@@ -1,4 +1,4 @@
-import { Clients, ErrorMessages, AxiosOpts } from "../consts";
+import { Clients, ErrorMessages } from "../consts";
 import { AxiosClient } from "../agents";
 
 function RealClient(opts) {
@@ -11,8 +11,7 @@ function RealClient(opts) {
   }
 
   if (real.client === Clients.AXIOS) {
-    const { axios } = real;
-    this.realClient = new AxiosClient(Object.assign(AxiosOpts, axios));
+    this.realClient = new AxiosClient(real);
   } else {
     throw new Error(ErrorMessages.NO_IMPLEMENT);
   }
