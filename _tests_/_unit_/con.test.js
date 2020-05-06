@@ -1,10 +1,10 @@
-import * as Fake from "./mock-data/fake.data";
-import { ErrorMessages, Clients, Modes, DelayInterval } from "../src/consts";
-import FlexApi from "../src";
+import * as Fake from "../_data_/fake.data";
+import { ErrorMessages, Clients, Modes, DelayInterval } from "../../src/consts";
+import FlexApi from "../../src";
 
-describe("Constructors test suite", () => {
-  describe("Fake constructor", () => {
-    it("Fake invalid endpoints", () => {
+describe("Constructors", () => {
+  describe("Fake", () => {
+    it("Invalid endpoints", () => {
       const opts = {
         mode: Modes.FAKE,
         fake: {
@@ -18,7 +18,7 @@ describe("Constructors test suite", () => {
       );
     });
 
-    it("Fake invalid fake object", () => {
+    it("Invalid fake obj", () => {
       const opts = {
         mode: Modes.FAKE,
         fake: null,
@@ -30,8 +30,8 @@ describe("Constructors test suite", () => {
     });
   });
 
-  describe("Mix constructor", () => {
-    it("Mix invalid fake object", () => {
+  describe("Mix", () => {
+    it("Invalid fake obj", () => {
       const opts = {
         mode: Modes.MIX,
         fake: null,
@@ -46,7 +46,7 @@ describe("Constructors test suite", () => {
       );
     });
 
-    it("Mix invalid fake endpoint", () => {
+    it("Invalid fake endpoint", () => {
       const opts = {
         mode: Modes.MIX,
         fake: {
@@ -64,7 +64,7 @@ describe("Constructors test suite", () => {
       );
     });
 
-    it("Mix invalid real object", () => {
+    it("Invalid real obj", () => {
       const opts = {
         mode: Modes.MIX,
         fake: {
@@ -82,8 +82,8 @@ describe("Constructors test suite", () => {
     });
   });
 
-  describe("Real constructor", () => {
-    it("Real invalid real object", () => {
+  describe("Real", () => {
+    it("Invalid real obj", () => {
       const opts = {
         mode: Modes.REAL,
         fake: {
@@ -100,7 +100,7 @@ describe("Constructors test suite", () => {
       );
     });
 
-    it("Real invalid real client", () => {
+    it("Invalid real client", () => {
       const opts = {
         mode: Modes.REAL,
         fake: {
@@ -119,7 +119,7 @@ describe("Constructors test suite", () => {
       );
     });
 
-    it("Real not implemented real client", () => {
+    it("No implemented agent", () => {
       const opts = {
         mode: Modes.REAL,
         fake: {
@@ -155,7 +155,7 @@ describe("Constructors test suite", () => {
     expect(() => new FlexApi(opts)).toThrow(ErrorMessages.INVALID_CONFIG);
   });
 
-  it("No mode", () => {
+  it("No supported mode", () => {
     const opts = {
       mode: "not_support_mode",
       fake: {

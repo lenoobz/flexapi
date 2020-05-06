@@ -20,7 +20,7 @@ const Verbs = {
   DELETE: "delete",
 };
 
-const DelayInterval = 1000;
+const DelayInterval = 50;
 
 const ErrorMessages = {
   NO_CLIENT: "No client available",
@@ -30,6 +30,7 @@ const ErrorMessages = {
   INVALID_CONFIG: "Invalid config",
   INVALID_FAKE_CONFIG: "Invalid fake config",
   INVALID_REAL_CONFIG: "Invalid real config",
+  INVALID_AXIOS_CONFIG: "Invalid axios config",
   POST: "Error occurred while making a POST request",
   GET: "Error occurred while making a GET request",
   PATCH: "Error occurred while making a PATCH request",
@@ -55,7 +56,7 @@ const MixOpts = {
   },
 };
 
-const AxiosOpts = {
+const AxiosDefault = {
   // eslint-disable-next-line handle-callback-err
   errorHandler: (error, message) => {
     throw new Error(message);
@@ -70,5 +71,5 @@ export {
   ErrorMessages,
   FakeOpts,
   MixOpts,
-  AxiosOpts,
+  AxiosDefault,
 };

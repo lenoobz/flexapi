@@ -2,12 +2,12 @@
  * @jest-environment node
  */
 
-import * as Fake from "./mock-data/fake.data";
-import { ErrorMessages, Modes, DelayInterval } from "../src/consts";
-import FlexApi from "../src";
+import * as Fake from "../_data_/fake.data";
+import { ErrorMessages, Modes, DelayInterval } from "../../src/consts";
+import FlexApi from "../../src";
 
-describe("Fake modes test suite", () => {
-  describe("Fake | GET requests", () => {
+describe("Fake mode", () => {
+  describe("GET", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -32,50 +32,50 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("GET | empty config object", async () => {
+    it("Empty config obj", async () => {
       const resp = await api.get("/api/v1/users", {});
-      expect(resp).toStrictEqual({
+      expect(resp.data).toStrictEqual({
         users: [Fake.data.userTest0, Fake.data.userTest1, Fake.data.userTest2],
       });
     });
 
-    it("GET | null config object", async () => {
+    it("No config obj", async () => {
       const resp = await api.get("/api/v1/users");
-      expect(resp).toStrictEqual({
+      expect(resp.data).toStrictEqual({
         users: [Fake.data.userTest0, Fake.data.userTest1, Fake.data.userTest2],
       });
     });
 
-    it("GET | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.get("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("GET | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.get("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("GET | with params", async () => {
+    it("Simple params", async () => {
       const resp = await api.get("/api/v1/users", {
         params: { uid: "0" },
       });
-      expect(resp).toStrictEqual({ userDetails: Fake.data.userTest0 });
+      expect(resp.data).toStrictEqual({ userDetails: Fake.data.userTest0 });
     });
 
-    it("GET | with array params", async () => {
+    it("Array params", async () => {
       const resp = await api.get("/api/v1/users", {
         params: { uid: ["0", "1"] },
       });
-      expect(resp).toStrictEqual({
+      expect(resp.data).toStrictEqual({
         users: [Fake.data.userTest0, Fake.data.userTest1],
       });
     });
   });
 
-  describe("Fake | POST requests", () => {
+  describe("POST", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -97,27 +97,27 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("POST | with body", async () => {
+    it("With data", async () => {
       const resp = await api.post("/api/v1/users/register", {
-        body: { ...Fake.data.userTest4 },
+        data: { ...Fake.data.userTest4 },
       });
-      expect(resp).toStrictEqual({ userDetails: Fake.data.userTest4 });
+      expect(resp.data).toStrictEqual({ userDetails: Fake.data.userTest4 });
     });
 
-    it("POST | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.post("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("POST | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.post("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
   });
 
-  describe("Fake | PUT requests", () => {
+  describe("PUT", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -139,27 +139,27 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("PUT | with body", async () => {
+    it("With body", async () => {
       const resp = await api.put("/api/v1/users/4", {
-        body: { ...Fake.data.userTest4 },
+        data: { ...Fake.data.userTest4 },
       });
-      expect(resp).toStrictEqual({ userDetails: Fake.data.userTest4 });
+      expect(resp.data).toStrictEqual({ userDetails: Fake.data.userTest4 });
     });
 
-    it("PUT | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.put("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("PUT | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.put("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
   });
 
-  describe("Fake | PATCH requests", () => {
+  describe("PATCH", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -181,27 +181,29 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("PATCH | with body", async () => {
+    it("With body", async () => {
       const resp = await api.post("/api/v1/users/patchUser", {
-        body: { lastname: "Test Patch", fullname: "Dev 4 Test Patch" },
+        data: { lastname: "Test Patch", fullname: "Dev 4 Test Patch" },
       });
-      expect(resp).toStrictEqual({ userDetails: Fake.data.patchUserTest4 });
+      expect(resp.data).toStrictEqual({
+        userDetails: Fake.data.patchUserTest4,
+      });
     });
 
-    it("PATCH | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.patch("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("PATCH | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.patch("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
   });
 
-  describe("Fake | DELETE requests", () => {
+  describe("DELETE", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -223,27 +225,27 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("DELETE | with body", async () => {
+    it("With body", async () => {
       const resp = await api.delete("/api/v1/users/4", {
-        body: { ...Fake.data.userTest4 },
+        data: { ...Fake.data.userTest4 },
       });
-      expect(resp).toStrictEqual({ message: "Success" });
+      expect(resp.data).toStrictEqual({ message: "Success" });
     });
 
-    it("DELETE | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.delete("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("DELETE | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.delete("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
   });
 
-  describe("Fake | HEAD requests", () => {
+  describe("HEAD", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -265,25 +267,25 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("HEAD | with body", async () => {
+    it("With body", async () => {
       const resp = await api.head("/api/v1/users/status");
       expect(resp).toBeUndefined();
     });
 
-    it("HEAD | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.head("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("HEAD | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.head("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
   });
 
-  describe("Fake | OPTIONS requests", () => {
+  describe("OPTIONS", () => {
     // Applies only to tests in this describe block
     let api = null;
     let opts = null;
@@ -305,18 +307,18 @@ describe("Fake modes test suite", () => {
       opts = null;
     });
 
-    it("OPTIONS | with body", async () => {
+    it("With body", async () => {
       const resp = await api.options("/api/v1/users/4");
       expect(resp).toBeUndefined();
     });
 
-    it("OPTIONS | throw with empty config object", async () => {
+    it("No handler & empty config obj", async () => {
       await expect(api.options("/api/v1/pathNotExisted", {})).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );
     });
 
-    it("OPTIONS | throw with null config object", async () => {
+    it("No handler & null config obj", async () => {
       await expect(api.options("/api/v1/pathNotExisted")).rejects.toThrow(
         ErrorMessages.NO_HANDLER
       );

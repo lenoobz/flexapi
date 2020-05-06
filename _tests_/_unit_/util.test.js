@@ -1,26 +1,26 @@
-import processURL from "../src/utils";
+import processURL from "../../src/utils";
 
-describe("Url utility test suite", () => {
+describe("Url Utility", () => {
   const baseUrl = "https://example.com/api/v1";
 
-  it("Url Util | empty config object", () => {
+  it("Empty config obj", () => {
     const url = processURL(baseUrl, {});
     expect(url).toEqual(baseUrl);
   });
 
-  it("Url Util | null config object", () => {
+  it("Null config obj", () => {
     const url = processURL(baseUrl);
     expect(url).toEqual(baseUrl);
   });
 
-  it("Url Util | simple config object", () => {
+  it("Simple params obj", () => {
     const url = processURL(baseUrl, {
       params: { uid: 0 },
     });
     expect(url).toEqual(`${baseUrl}?uid=0`);
   });
 
-  it("Url Util | config with multiple param values", () => {
+  it("Complex params obj", () => {
     const url = processURL(baseUrl, {
       params: { uid: 0, sortby: "asc", filterby: 'type="fake"' },
     });
@@ -29,7 +29,7 @@ describe("Url utility test suite", () => {
     );
   });
 
-  it("Url Util | config with params array", () => {
+  it("Params with array", () => {
     const url = processURL(baseUrl, {
       params: { uid: [0, 1, 2] },
     });
