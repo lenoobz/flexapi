@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf lib dist es",
     "prepare": "npm run clean && npm run lint && npm run test && npm run build",
-    "lint": "eslint src test",
+    "lint": "eslint src _tests_",
     "build": "npm run build:commonjs && npm run build:umd && npm run build:umd:min && npm run build:es",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
     "build:es": "cross-env BABEL_ENV=es babel src --out-dir es",
