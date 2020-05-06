@@ -5,10 +5,7 @@ examples/
 node_modules/
 typings/
 sandbox/
-test/
-dist/
-es/
-lib/
+_tests_/
 bower.json
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
