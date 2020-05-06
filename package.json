@@ -16,7 +16,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch _tests_/*/*.test.js",
-    "coveralls": "jest --coverage && cat ./_test_/_coverage_/lcov.info | coveralls"
+    "coveralls": "jest --coverage && cat ./_tests_/_coverage_/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {
