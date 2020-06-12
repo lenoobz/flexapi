@@ -13,7 +13,7 @@ function AxiosClient(opts) {
 }
 
 AxiosClient.prototype.extractPayload = function (payload) {
-  const { headers, params, errorHandler } = payload;
+  const { headers, params, errorHandler, ...rest } = payload;
   const paramOpts = Object.assign({}, this.axiosConfig.params, params);
   const headerOpts = Object.assign({}, this.axiosConfig.headers, headers);
 
@@ -22,6 +22,7 @@ AxiosClient.prototype.extractPayload = function (payload) {
       ...this.axiosConfig,
       headers: headerOpts,
       params: paramOpts,
+      ...rest,
     },
     errorHandler || this.errorHandler,
   ];
