@@ -1,6 +1,6 @@
 {
   "name": "flexapi",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Flexible swap mode and API request client",
   "main": "lib/index.js",
   "module": "es/index.js",
